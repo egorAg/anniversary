@@ -1,0 +1,46 @@
+{
+  "name": "anniversary-app",
+  "version": "0.1.0",
+  "homepage": "https://egorAg.github.io/anniversary",
+  "private": true,
+  "dependencies": {
+    "autoprefixer": "^10.4.20",
+    "cra-template-typescript": "1.2.0",
+    "framer-motion": "^12.0.6",
+    "postcss": "^8.5.1",
+    "react": "^19.0.0",
+    "react-confetti": "^6.2.2",
+    "react-dom": "^19.0.0",
+    "react-scripts": "5.0.1",
+    "tailwindcss": "^4.0.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.0.0",
+    "postcss-loader": "^8.1.1"
+  }
+}
