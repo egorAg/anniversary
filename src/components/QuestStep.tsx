@@ -11,7 +11,7 @@ function QuestStep() {
 
   const tasks = [
     {
-      title: "Первое задание",
+      title: "Первое задание!",
       description: "Найди письмо, спрятанное под подушкой.",
       key: "love2025",
       secretMessage: "Ты нашла это письмо! Я тебя люблю ❤️",

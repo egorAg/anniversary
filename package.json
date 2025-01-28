@@ -1,7 +1,7 @@
 {
   "name": "anniversary-app",
   "version": "0.1.0",
-  "homepage": "https://egorAg.github.io/anniversary",
+  "homepage": "https://egorag.github.io/anniversary/",
   "private": true,
   "dependencies": {
     "autoprefixer": "^10.4.20",
