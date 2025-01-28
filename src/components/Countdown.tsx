@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 
-function Countdown({ onFinish, showHearts, heartsHidden }) {
+function Countdown({ onFinish }) {
   const targetDate = new Date("2025-02-18T00:00:00").getTime(); // Дата годовщины
   const [timeLeft, setTimeLeft] = useState(targetDate - Date.now());
   const [isToday, setIsToday] = useState(false); // Сегодняшняя дата
   const [isPast, setIsPast] = useState(false); // Дата уже прошла
-  const [hearts, setHearts] = useState([]); // Сердечки
+  const [isReset, setIsReset] = useState(false); // Состояние сброса таймера
 
-  // Таймер обратного отсчёта
+  // Основной таймер
   useEffect(() => {
+    if (isReset) return; // Пропускаем стандартный таймер, если он сброшен
+
     const now = Date.now();
 
     if (now < targetDate) {
@@ -30,47 +32,35 @@ function Countdown({ onFinish, showHearts, heartsHidden }) {
       // Если дата уже прошла
       setIsPast(true);
     }
-  }, [targetDate]);
+  }, [targetDate, isReset]);
 
-  // Генерация сердечек
+  // Таймер для сброса
   useEffect(() => {
-    if (showHearts) {
-      const emojiHearts = ["❤️", "💕", "💖", "💘", "💗", "💓", "💞"];
+    if (!isReset) return;
 
-      const generateHearts = (count) => {
-        return Array.from({ length: count }, (_, index) => {
-          const randomLeft = Math.random() * 100;
-          const randomDelay = Math.random() * 5;
-          const randomDuration = Math.random() * 5 + 3;
-          const randomSize = Math.random() * 20 + 10;
-          const randomEmoji =
-            emojiHearts[Math.floor(Math.random() * emojiHearts.length)];
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 0) {
+          clearInterval(timer);
+          onFinish();
+          setIsReset(false); // Возвращаемся к обычному режиму
+          return 0;
+        }
+        return prev - 1000;
+      });
+    }, 1000);
 
-          return (
-            <div
-              key={index}
-              className={`heart`}
-              style={{
-                left: `${randomLeft}%`,
-                animationDelay: `${randomDelay}s`,
-                animationDuration: `${randomDuration}s`,
-                fontSize: `${randomSize}px`,
-                top: "-100px",
-                opacity: heartsHidden ? 0 : 1,
-                transition: "opacity 1.5s ease",
-              }}
-            >
-              {randomEmoji}
-            </div>
-          );
-        });
-      };
+    return () => clearInterval(timer);
+  }, [isReset, onFinish]);
 
-      setHearts(generateHearts(50));
-    } else {
-      setHearts([]);
-    }
-  }, [showHearts, heartsHidden]);
+  // Глобальная команда для сброса таймера
+  useEffect(() => {
+    window.resetCountdownTo5Seconds = () => {
+      console.log("%cТаймер сброшен до 5 секунд!", "color: #ff6f61; font-size: 16px;");
+      setTimeLeft(5000); // Устанавливаем время на 5 секунд
+      setIsReset(true); // Активируем режим сброса
+    };
+  }, []);
 
   const formatTime = (time) => {
     const days = Math.floor(time / (1000 * 60 * 60 * 24));
@@ -128,7 +118,6 @@ function Countdown({ onFinish, showHearts, heartsHidden }) {
         <p style={styles.subheader}>
           Приготовься к сюрпризу...
         </p>
-        {showHearts && <div className="heart-container">{hearts}</div>}
       </div>
     );
   }
@@ -149,7 +138,6 @@ function Countdown({ onFinish, showHearts, heartsHidden }) {
       <p style={styles.timer}>
         {formatTime(timeLeft)}
       </p>
-      {showHearts && <div className="heart-container">{hearts}</div>}
     </div>
   );
 }
