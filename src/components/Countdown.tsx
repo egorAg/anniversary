@@ -105,20 +105,12 @@ function Countdown({ onFinish, showHearts, heartsHidden }) {
   if (isPast) {
     return (
       <div style={{ textAlign: "center", padding: "20px" }}>
-        <h1 style={{ fontSize: "24px", marginBottom: "10px" }}>
+        <h1 style={styles.header}>
           Наша годовщина была {getDaysAgo()} дней назад
         </h1>
         <button
           onClick={handleSkipToTasks}
-          style={{
-            padding: "10px 20px",
-            fontSize: "16px",
-            borderRadius: "5px",
-            backgroundColor: "#ff6f61",
-            color: "#fff",
-            border: "none",
-            cursor: "pointer",
-          }}
+          style={styles.button}
         >
           Перейти к заданиям
         </button>
@@ -130,10 +122,10 @@ function Countdown({ onFinish, showHearts, heartsHidden }) {
   if (isToday) {
     return (
       <div style={{ position: "relative", overflow: "hidden", textAlign: "center" }}>
-        <h1 style={{ fontSize: "24px", marginBottom: "10px" }}>
+        <h1 style={styles.header}>
           Наша годовщина уже сегодня!
         </h1>
-        <p style={{ fontSize: "18px", marginBottom: "20px" }}>
+        <p style={styles.subheader}>
           Приготовься к сюрпризу...
         </p>
         {showHearts && <div className="heart-container">{hearts}</div>}
@@ -143,14 +135,56 @@ function Countdown({ onFinish, showHearts, heartsHidden }) {
 
   // Если дата ещё не наступила
   return (
-    <div style={{ position: "relative", overflow: "hidden", textAlign: "center" }}>
-      <h1 style={{ fontSize: "24px", marginBottom: "10px" }}>Обратный отсчёт:</h1>
-      <p style={{ fontSize: "18px" }}>{formatTime(timeLeft)}</p>
+    <div
+      style={{
+        position: "relative",
+        overflow: "hidden",
+        textAlign: "center",
+        padding: "20px",
+      }}
+    >
+      <h1 style={styles.header}>
+        До нашей годовщины осталось:
+      </h1>
+      <p style={styles.timer}>
+        {formatTime(timeLeft)}
+      </p>
       {showHearts && <div className="heart-container">{hearts}</div>}
     </div>
   );
 }
 
+const styles = {
+  header: {
+    fontSize: "36px",
+    marginBottom: "10px",
+    color: "white",
+    textShadow: "2px 2px 4px black", // Чёрная обводка текста
+    fontFamily: "'Pacifico', cursive", // Красивый рукописный шрифт
+  },
+  subheader: {
+    fontSize: "20px",
+    marginBottom: "30px",
+    color: "white",
+    textShadow: "1px 1px 3px black",
+    fontFamily: "'Roboto', sans-serif",
+  },
+  timer: {
+    fontSize: "48px",
+    fontWeight: "bold",
+    color: "white",
+    textShadow: "2px 2px 6px black",
+    fontFamily: "'Roboto Mono', monospace", // Монопространственный стиль для таймера
+  },
+  button: {
+    padding: "10px 20px",
+    fontSize: "16px",
+    borderRadius: "5px",
+    backgroundColor: "#ff6f61",
+    color: "#fff",
+    border: "none",
+    cursor: "pointer",
+  },
+};
+
 export default Countdown;
-
-
