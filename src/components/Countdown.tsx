@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 function Countdown({ onFinish, showHearts, heartsHidden }) {
-  const targetDate = new Date("2025-01-18T00:00:00").getTime(); // Дата годовщины
+  const targetDate = new Date("2025-02-18T00:00:00").getTime(); // Дата годовщины
   const [timeLeft, setTimeLeft] = useState(targetDate - Date.now());
   const [isToday, setIsToday] = useState(false); // Сегодняшняя дата
   const [isPast, setIsPast] = useState(false); // Дата уже прошла
